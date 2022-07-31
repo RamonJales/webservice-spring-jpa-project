@@ -1,1 +1,1 @@
-# javafx-jdbc-project
+# webservice-spring-jpa-project
