@@ -1,12 +1,15 @@
 package com.br.webservicespringjpaproject.model.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class UserEntity implements Serializable {
@@ -20,6 +23,9 @@ public class UserEntity implements Serializable {
 	private String email;
 	private String phone;
 	private String password;
+	
+	@OneToMany(mappedBy = "client")
+	private List<OrderEntity> orderEntities = new ArrayList<>();
 	
 	public UserEntity() {}
 	
@@ -69,6 +75,10 @@ public class UserEntity implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public List<OrderEntity> getOrders() {
+		return orderEntities;
 	}
 
 	@Override
