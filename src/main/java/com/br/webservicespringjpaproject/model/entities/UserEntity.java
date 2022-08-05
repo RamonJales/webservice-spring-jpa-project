@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class UserEntity implements Serializable {
 	
@@ -77,6 +79,7 @@ public class UserEntity implements Serializable {
 		this.password = password;
 	}
 
+	@JsonIgnore
 	public List<OrderEntity> getOrders() {
 		return orderEntities;
 	}
