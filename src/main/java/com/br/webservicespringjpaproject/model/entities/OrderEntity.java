@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.br.webservicespringjpaproject.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -21,15 +22,18 @@ public class OrderEntity {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
 	
+	private Integer status;
+	
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private UserEntity client;
 	
 	public OrderEntity() {}
 
-	public OrderEntity(Integer id, Instant moment, UserEntity client) {
+	public OrderEntity(Integer id, Instant moment, OrderStatus status, UserEntity client) {
 		this.id = id;
 		this.moment = moment;
+		setStatus(status);
 		this.client = client;
 	}
 
@@ -47,6 +51,16 @@ public class OrderEntity {
 
 	public void setMoment(Instant moment) {
 		this.moment = moment;
+	}
+	
+	public OrderStatus getStatus() {
+		return OrderStatus.valueOf(status);
+	}
+
+	public void setStatus(OrderStatus status) {
+		if (status != null) {
+			this.status = status.getCode();
+		}
 	}
 
 	public UserEntity getUser() {
