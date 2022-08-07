@@ -9,8 +9,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.br.webservicespringjpaproject.enums.OrderStatus;
+import com.br.webservicespringjpaproject.model.entities.CategoryEntity;
 import com.br.webservicespringjpaproject.model.entities.OrderEntity;
 import com.br.webservicespringjpaproject.model.entities.UserEntity;
+import com.br.webservicespringjpaproject.repositories.CategoryRepository;
 import com.br.webservicespringjpaproject.repositories.OrderRepository;
 import com.br.webservicespringjpaproject.repositories.UserRepository;
 
@@ -23,8 +25,16 @@ public class TestConfig implements CommandLineRunner {
 	@Autowired
 	private OrderRepository orderRepository;
 	
+	@Autowired
+	private CategoryRepository categoryRepository;
+	
 	@Override
 	public void run(String... args) throws Exception {
+		
+		CategoryEntity cat1 = new CategoryEntity(null, "Electronics");
+		CategoryEntity cat2 = new CategoryEntity(null, "Books");
+		CategoryEntity cat3 = new CategoryEntity(null, "Computers");
+		
 		UserEntity u1 = new UserEntity(null ,"maria", "maria14@gail.com", "46445614", "123senha");
 		UserEntity u2 = new UserEntity(null ,"joao", "joao53@gmail.com", "48973133", "45662a");
 		
@@ -34,6 +44,7 @@ public class TestConfig implements CommandLineRunner {
 		
 		userRepository.saveAll(Arrays.asList(u1, u2));
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 	}
 	
 	
