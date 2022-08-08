@@ -1,5 +1,6 @@
 package com.br.webservicespringjpaproject.model.entities;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -14,7 +15,9 @@ import com.br.webservicespringjpaproject.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-public class OrderEntity {
+public class OrderEntity implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
