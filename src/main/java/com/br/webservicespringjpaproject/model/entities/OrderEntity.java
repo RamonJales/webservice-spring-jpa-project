@@ -10,11 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.br.webservicespringjpaproject.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
+@Table(name = "tb_order")
 public class OrderEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
