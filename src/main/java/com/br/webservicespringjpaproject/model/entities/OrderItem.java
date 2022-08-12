@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.br.webservicespringjpaproject.model.entities.pk.OrderItemPk;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "tb_order_item")
@@ -16,7 +18,9 @@ public class OrderItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@EmbeddedId
-	private OrderItemPk id;
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private OrderItemPk id = new OrderItemPk(); // must be instantiate, because its a compound id
+	
 	private Integer quantity;
 	private Double price;
 	
@@ -29,6 +33,7 @@ public class OrderItem implements Serializable {
 		this.price = price;
 	}
 	
+	@JsonIgnore
 	public OrderEntity getOrder() {
 		return id.getOrder();
 	}

@@ -2,7 +2,9 @@ package com.br.webservicespringjpaproject.model.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.br.webservicespringjpaproject.enums.OrderStatus;
@@ -32,6 +35,9 @@ public class OrderEntity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private UserEntity client;
+	
+	@OneToMany(mappedBy = "id.order")
+	private Set<OrderItem> items = new HashSet<>();
 	
 	public OrderEntity() {}
 
@@ -74,6 +80,10 @@ public class OrderEntity implements Serializable {
 
 	public void setUser(UserEntity client) {
 		this.client = client;
+	}
+	
+	public Set<OrderItem> getItems() {
+		return items;
 	}
 
 	@Override
