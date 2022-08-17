@@ -1,38 +1,38 @@
 package com.br.webservicespringjpaproject.model.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.time.Instant;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
-@Table(name = "tb_category")
-public class CategoryEntity implements Serializable {
+@Table(name = "tb_payment")
+public class Payment implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String name;
+	private Instant moment;
 	
-	@ManyToMany(mappedBy = "categories")
-	@JsonIgnore
-	private Set<Product> products = new HashSet<>();
+	@OneToOne
+	@MapsId
+	private OrderEntity orderEntity;
 	
-	public CategoryEntity() {}
+	public Payment() {}
 
-	public CategoryEntity(Integer id, String name) {
+	public Payment(Integer id, Instant moment, OrderEntity orderEntity) {
+		super();
 		this.id = id;
-		this.name = name;
+		this.moment = moment;
+		this.orderEntity = orderEntity;
 	}
 
 	public Integer getId() {
@@ -43,18 +43,22 @@ public class CategoryEntity implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public Instant getMoment() {
+		return moment;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setMoment(Instant moment) {
+		this.moment = moment;
 	}
-	
-	public Set<Product> getProduct() {
-		return products;
+
+	public OrderEntity getOrderEntity() {
+		return orderEntity;
 	}
-	
+
+	public void setOrderEntity(OrderEntity orderEntity) {
+		this.orderEntity = orderEntity;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -68,8 +72,8 @@ public class CategoryEntity implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CategoryEntity other = (CategoryEntity) obj;
+		Payment other = (Payment) obj;
 		return Objects.equals(id, other.id);
 	}
-
+	
 }

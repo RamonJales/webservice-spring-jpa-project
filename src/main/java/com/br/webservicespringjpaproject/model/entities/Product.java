@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -30,19 +30,18 @@ public class Product implements Serializable {
 	private String description;
 	private Double price;
 	private String imgUrl;
-	
-	//we are using the "set" collection to ensure that the category will not be repeated in the same product
+
+	// we are using the "set" collection to ensure that the category will not be
+	// repeated in the same product
 	@ManyToMany
-	@JoinTable(name = "tb_product_category",
-	joinColumns = @JoinColumn(name = "product_id"),
-	inverseJoinColumns = @JoinColumn(name = "category_id"))
-	
+	@JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private Set<CategoryEntity> categories = new HashSet<>();
-	
+
 	@OneToMany(mappedBy = "id.product")
 	private Set<OrderItem> items = new HashSet<>();
-	
-	public Product() {}
+
+	public Product() {
+	}
 
 	public Product(Integer id, String name, String description, Double price, String imgUrl) {
 		this.id = id;
@@ -95,7 +94,7 @@ public class Product implements Serializable {
 	public Set<CategoryEntity> getCategories() {
 		return categories;
 	}
-	
+
 	@JsonIgnore
 	public Set<OrderEntity> getOrders() {
 		Set<OrderEntity> set = new HashSet<>();
@@ -104,7 +103,7 @@ public class Product implements Serializable {
 		}
 		return set;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

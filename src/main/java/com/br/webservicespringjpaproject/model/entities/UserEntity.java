@@ -28,8 +28,9 @@ public class UserEntity implements Serializable {
 	private String phone;
 	private String password;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "client")
-	private List<OrderEntity> orderEntities = new ArrayList<>();
+	private List<OrderEntity> orders = new ArrayList<>();
 	
 	public UserEntity() {}
 	
@@ -83,7 +84,7 @@ public class UserEntity implements Serializable {
 
 	@JsonIgnore
 	public List<OrderEntity> getOrders() {
-		return orderEntities;
+		return orders;
 	}
 
 	@Override
