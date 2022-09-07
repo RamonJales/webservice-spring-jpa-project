@@ -2,6 +2,8 @@ package com.br.webservicespringjpaproject.servicies;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -42,9 +44,14 @@ public class UserService {
 	}
 	
 	public UserEntity update(Integer id, UserEntity obj) {
-		UserEntity entity = repository.findById(id).get();
-		updateData(entity, obj);
-		return repository.save(entity);
+		try {
+			UserEntity entity = repository.findById(id).get();
+			updateData(entity, obj);
+			return repository.save(entity);
+		}
+		catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 		
 	}
 
