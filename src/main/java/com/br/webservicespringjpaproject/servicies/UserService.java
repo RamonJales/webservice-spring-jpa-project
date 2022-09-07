@@ -3,10 +3,13 @@ package com.br.webservicespringjpaproject.servicies;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.br.webservicespringjpaproject.model.entities.UserEntity;
 import com.br.webservicespringjpaproject.repositories.UserRepository;
+import com.br.webservicespringjpaproject.servicies.exceptions.DataBaseException;
 import com.br.webservicespringjpaproject.servicies.exceptions.ResourceNotFoundException;
 
 @Service
@@ -27,7 +30,15 @@ public class UserService {
 	}
 	
 	public void delete(Integer id) {
-		repository.deleteById(id);
+		try {
+			repository.deleteById(id);
+		}
+		catch (EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException(id);
+		}
+		catch (DataIntegrityViolationException e) {
+			throw new DataBaseException(e.getMessage());
+		}
 	}
 	
 	public UserEntity update(Integer id, UserEntity obj) {
